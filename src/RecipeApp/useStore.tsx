@@ -1,0 +1,29 @@
+import { create } from "zustand";
+
+interface Recipe{
+  id:number;
+  name:string;
+  ingredients:string[],
+  instructions:string
+}
+
+interface RecipeStore{
+  recipes:Recipe[];
+  addRecipe:(recipe:Recipe)=>void;
+  removeRecipe:(id:number)=>void;
+}
+
+export const useStore = create<RecipeStore>((set) => {
+  const localData = localStorage.getItem("RECIPES");
+  const initialRecipes: Recipe[] = localData ? JSON.parse(localData) : [];
+
+  return {
+    recipes: initialRecipes,
+    addRecipe: (recipe) =>
+      set((state) => ({ recipes: [...state.recipes, recipe] })),
+    removeRecipe: (id) =>
+      set((state) => ({
+        recipes: state.recipes.filter((recipe) => recipe.id !== id),
+      })),
+  };
+});
