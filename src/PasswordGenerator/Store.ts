@@ -7,6 +7,7 @@ type PasswordState = {
   includeUppercase:boolean;
   includeLowercase:boolean;
   generatedPassword:string;
+  
   setLength:(length:number)=>void;
   toggleNumbers:()=>void;
   toggleSymbols:()=>void;
